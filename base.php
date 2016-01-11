@@ -18,8 +18,9 @@ function listdir( $dir ) {
 }
 
 function insert_post( $body ) {
+	$title = preg_split('/\r\n|\r|\n/', $body, 2);
 	$my_post = array(
-		'post_title'    => 'My post',
+		'post_title'    => $title[0],
 		'post_content'  => $body,
 		'post_status'   => 'publish',
 		'post_author'   => 1,
@@ -29,4 +30,12 @@ function insert_post( $body ) {
 	$wp_error = true;
 	$post_id = wp_insert_post( $my_post, $wp_error );
 	echo "<p>Inserted post number ", $post_id, "</p>";
+}
+
+function make_post( $filename ) {
+	$fh      = fopen( $filename, 'r' );
+	$theData = fread( $fh, filesize( $filename ) );
+	fclose( $fh );
+
+	return $theData;
 }

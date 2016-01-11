@@ -49,6 +49,11 @@ class Earthshare_Ingest_Admin {
 				foreach ( $dirfiles as $key => $filename ) {
 					if ( substr( $filename, - 4 ) == '.txt' && ! is_dir( $filename ) ) {
 						$data[ $filename ] = php_strip_whitespace( $filename );
+						$theData = make_post($filename);
+						insert_post( $theData );
+						echo "<br>";
+						echo "<br>Finished.";
+						echo "<br>";
 					} else {
 						$other[ $filename ] = ( ! is_dir( $filename ) ) ? file_get_contents( $filename ) : '';
 					}
